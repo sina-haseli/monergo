@@ -122,7 +122,6 @@ func Parse(s string, net protocol.Network) (Address, error) {
 
 // ParseAny decodes an address for whichever network its prefix belongs to.
 func ParseAny(s string) (Address, error) {
-	var lastErr error = ErrWrongNetwork
 	for _, net := range protocol.Networks {
 		a, err := Parse(s, net)
 		if err == nil {
@@ -131,9 +130,8 @@ func ParseAny(s string) (Address, error) {
 		if !errors.Is(err, ErrWrongNetwork) {
 			return Address{}, err
 		}
-		lastErr = err
 	}
-	return Address{}, lastErr
+	return Address{}, ErrWrongNetwork
 }
 
 // validKey is the per-key check in check_address: a decodable point that is not the

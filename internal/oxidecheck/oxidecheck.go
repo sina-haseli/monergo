@@ -68,7 +68,7 @@ func Run(t testing.TB, txs []Tx) []Result {
 	if err != nil {
 		t.Fatal(err)
 	}
-	cmd := exec.Command(bin)
+	cmd := exec.Command(bin) //nolint:gosec // dev-only harness at a fixed path or $MONERGO_OXIDE_CHECK
 	cmd.Stdin = bytes.NewReader(req)
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr

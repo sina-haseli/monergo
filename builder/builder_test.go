@@ -442,3 +442,20 @@ func TestExtraLayoutMatchesWallet2(t *testing.T) {
 		t.Fatalf("3-output standard extra layout: %d bytes", len(p.Extra))
 	}
 }
+
+// FuzzSign feeds arbitrary JSON requests to the signer: it must return an error or
+// a transaction that verifies (SignWithRand self-verifies), never panic.
+func FuzzSign(f *testing.F) {
+	me, bob := randAccount(f), randAccount(f)
+	in := receive(f, me, keys.SubaddressIndex{}, 5e12, false)
+	seed, _ := json.Marshal(baseRequest([]Input{in}, []Destination{{addr(f, bob, keys.SubaddressIndex{}), 1e12}}))
+	f.Add(seed)
+	f.Add([]byte(`{"network":"stagenet"}`))
+	f.Fuzz(func(t *testing.T, b []byte) {
+		var req TransferRequest
+		if json.Unmarshal(b, &req) != nil {
+			return
+		}
+		_, _ = SignWithRand(rand.Reader, me, req)
+	})
+}

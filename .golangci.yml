@@ -1,0 +1,49 @@
+version: "2"
+
+run:
+  tests: true
+
+linters:
+  default: none
+  enable:
+    - govet
+    - staticcheck
+    - errcheck
+    - ineffassign
+    - unused
+    - gosec
+    - depguard
+    - misspell
+    - bodyclose
+  settings:
+    depguard:
+      rules:
+        # Library and tool code must not use a non-cryptographic RNG.
+        no-math-rand:
+          files:
+            - "!$test"
+          deny:
+            - pkg: math/rand
+              desc: use crypto/rand
+            - pkg: math/rand/v2
+              desc: use crypto/rand
+    gosec:
+      excludes:
+        - G115 # integer conversions are checked where they matter (amount overflow tests)
+  exclusions:
+    rules:
+      # Tests may use math/rand for shapes and amounts.
+      - path: _test\.go
+        linters: [gosec]
+        text: G404
+      # Dev tools: user-supplied URLs and files are the point.
+      - path: tools/
+        linters: [gosec]
+        text: "G107|G304"
+      - path: cmd/
+        linters: [gosec]
+        text: G304
+
+formatters:
+  enable:
+    - gofmt

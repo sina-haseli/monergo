@@ -32,3 +32,65 @@ jobs:
       - run: go vet ./...
       - run: go build ./...
       - run: go test -count=1 ./...
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - uses: golangci/golangci-lint-action@v8
+        with:
+          version: v2.15.0
+
+  fuzz:
+    runs-on: ubuntu-latest
+    env:
+      CGO_ENABLED: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - name: Fuzz every parser for 20s each
+        run: |
+          set -e
+          for t in \
+            "./internal/varint FuzzRoundTrip" \
+            "./address/base58 FuzzDecode" \
+            "./address/base58 FuzzDecodeAddr" \
+            "./address FuzzParse" \
+            "./seed FuzzDecode" \
+            "./seed FuzzRoundTrip" \
+            "./tx FuzzParse" \
+            "./tx FuzzParseExtra" \
+            "./builder FuzzSign"; do
+            set -- $t
+            go test -run '^$' -fuzz "^$2\$" -fuzztime 20s "$1"
+          done
+
+  oxide-check:
+    # Cross-checks our proofs and transactions with monero-oxide (independent Rust
+    # implementation). Dev-only; never part of the Go build.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            tools/oxide-check/target
+          key: oxide-${{ hashFiles('tools/oxide-check/Cargo.lock') }}
+      - run: cargo build --release --locked
+        working-directory: tools/oxide-check
+      - name: Oxide cross-check tests (must not skip)
+        run: |
+          out=$(go test -count=1 -v -run 'Oxide' ./verify ./builder)
+          echo "$out"
+          if echo "$out" | grep -q -- '--- SKIP'; then echo "oxide tests skipped"; exit 1; fi
