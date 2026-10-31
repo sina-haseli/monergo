@@ -14,6 +14,7 @@ Status: **approved 2026-10-31** with every recommendation in §5 accepted.
 | M7 Builder | done: wallet2-equivalent construction; recipients decode amounts; oxide accepts with matching hash and weight |
 | M8 Stagenet E2E | **blocked**: tooling and `docs/stagenet-e2e.md` ready, daemon side tested live; needs a funded stagenet wallet (Q7) |
 | M9 Hardening | done: fuzz targets for all parsers + signer, golangci-lint clean, CI matrix + oxide job, benchmarks |
+| Production pass | done: monero-oxide wallet scans built txs; constant-time secret decoding; early weight limit; SECURITY.md threat model; govulncheck, pinned actions, Dependabot, release workflow. Remaining before real funds: M8, independent audit, mainnet canary |
 
 Deviations from upstream, all deliberate:
 - The BP+ prover uses constant-time multiexps.

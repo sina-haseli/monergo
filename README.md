@@ -21,6 +21,26 @@ See [docs/PLAN.md](docs/PLAN.md) for milestones and evidence.
 - **Hard forks:** only v16 transactions can be built. FCMP++ (v17) is not supported, and
   the signer refuses any other hard-fork version.
 
+## Production readiness
+
+Done:
+- **Engineering hardening.** Constant-time secret handling, input and fee validation,
+  self-verification of every signed transaction, and early weight limits.
+- **Independent cross-checks.** monero-oxide's verifier and wallet scanner accept everything
+  monergo builds.
+- **Fuzzing and linting.** Every parser and the signer are fuzzed; golangci-lint and
+  govulncheck run in CI.
+- **Supply chain.** CI actions are pinned to commit SHAs, Dependabot is configured, and
+  tagged releases build reproducible binaries with checksums.
+- **Documentation.** The threat model is in [SECURITY.md](SECURITY.md): what the signer
+  guarantees, and what the calling policy must handle.
+
+Still required before real funds:
+1. The stagenet end-to-end run in [docs/stagenet-e2e.md](docs/stagenet-e2e.md). It needs a
+   funded stagenet wallet.
+2. An independent security audit.
+3. A small mainnet canary transaction.
+
 ## Usage
 
 ```go
