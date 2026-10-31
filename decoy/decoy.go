@@ -161,8 +161,15 @@ func (p *Picker) Pick() uint64 {
 //
 // This is a simplification of wallet2::get_outs: it does not fetch extra outputs
 // to replace locked or blacklisted ones. Callers should fetch the picked outputs
-// with /get_outs and retry any that are not unlocked.
+// with /get_outs and call SelectExcluding with any that are not unlocked.
 func Select(rng io.Reader, rctOffsets []uint64, real uint64, ringSize int) (ring []uint64, pos int, err error) {
+	return SelectExcluding(rng, rctOffsets, real, ringSize, nil)
+}
+
+// SelectExcluding is Select, but it never picks an index in exclude (for
+// example outputs /get_outs reported as locked). Excluded picks are discarded
+// and redrawn, as wallet2::get_outs discards locked outputs.
+func SelectExcluding(rng io.Reader, rctOffsets []uint64, real uint64, ringSize int, exclude map[uint64]bool) (ring []uint64, pos int, err error) {
 	// A failing caller-supplied reader panics deep in sampling; report it instead.
 	defer func() {
 		if r := recover(); r != nil {
@@ -187,7 +194,7 @@ func Select(rng io.Reader, rctOffsets []uint64, real uint64, ringSize int) (ring
 		if attempts > 100*ringSize+1000 {
 			return nil, 0, ErrNotEnoughOutputs
 		}
-		if i := p.Pick(); i != badPick {
+		if i := p.Pick(); i != badPick && !exclude[i] {
 			picked[i] = true
 		}
 	}

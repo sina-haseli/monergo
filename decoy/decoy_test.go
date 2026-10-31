@@ -110,3 +110,26 @@ func TestSelectReportsRNGFailure(t *testing.T) {
 		t.Fatal("RNG failure not reported")
 	}
 }
+
+func TestSelectExcluding(t *testing.T) {
+	offs := chain(400, 2) // a small chain, as on a fresh regtest network
+	real := uint64(100)
+	exclude := map[uint64]bool{}
+	for g := uint64(600); g < 780; g++ { // pretend the newest outputs are locked
+		exclude[g] = true
+	}
+	for range 50 {
+		ring, pos, err := SelectExcluding(rand.Reader, offs, real, 16, exclude)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if len(ring) != 16 || ring[pos] != real {
+			t.Fatalf("ring %v, pos %d", ring, pos)
+		}
+		for _, g := range ring {
+			if exclude[g] {
+				t.Fatalf("picked excluded output %d", g)
+			}
+		}
+	}
+}
