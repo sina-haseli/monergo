@@ -161,3 +161,27 @@ func WipeScalar(s *edwards25519.Scalar) {
 		s.Set(edwards25519.NewScalar())
 	}
 }
+
+// lMinusOne is l - 1, the largest canonical scalar.
+var lMinusOne = func() *edwards25519.Scalar {
+	b := [32]byte{
+		0xec, 0xd3, 0xf5, 0x5c, 0x1a, 0x63, 0x12, 0x58, 0xd6, 0x9c, 0xf7, 0xa2, 0xde, 0xf9, 0xde, 0x14,
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10,
+	}
+	s, err := new(edwards25519.Scalar).SetCanonicalBytes(b[:])
+	if err != nil {
+		panic(err)
+	}
+	return s
+}()
+
+// IsInMainSubgroup reports whether l·p is the identity, i.e. p has no torsion
+// component. l·p is computed as (l-1)·p + p because l itself is not a canonical
+// scalar.
+//
+// Ported from monero src/ringct/rctOps.cpp: isInMainSubgroup / toPointCheckOrder.
+func IsInMainSubgroup(p *edwards25519.Point) bool {
+	q := new(edwards25519.Point).ScalarMult(lMinusOne, p)
+	q.Add(q, p)
+	return IsIdentity(q)
+}

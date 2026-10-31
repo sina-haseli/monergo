@@ -161,3 +161,22 @@ func TestFieldConstants(t *testing.T) {
 		}
 	}
 }
+
+func TestIsInMainSubgroup(t *testing.T) {
+	g := edwards25519.NewGeneratorPoint()
+	if !IsInMainSubgroup(g) {
+		t.Fatal("G must be in the prime-order subgroup")
+	}
+	// A point of order 8 (torsion), from the Ed25519 small-order list.
+	t8, _ := hex.DecodeString("26e8958fc2b227b045c3f489f2ef98f0d5dfac05d3c63339b13802886d53fc05")
+	p, err := DecodePoint([32]byte(t8))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if IsInMainSubgroup(p) {
+		t.Fatal("order-8 point accepted")
+	}
+	if IsInMainSubgroup(new(edwards25519.Point).Add(g, p)) {
+		t.Fatal("G + torsion accepted")
+	}
+}
