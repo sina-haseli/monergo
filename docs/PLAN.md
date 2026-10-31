@@ -6,7 +6,10 @@ Status: **approved 2026-10-31** with every recommendation in §5 accepted.
 |---|---|
 | M0 Scaffold | done |
 | M1 Primitives | done: every in-scope `tests.txt` vector passes (see commit log) |
-| M2–M9 | not started |
+| M2 Addresses | done: 90 wallet-rpc addresses + upstream base58 unit tests |
+| M3 Seed | done: 3 wallet seeds round-trip to the reference keys and mnemonics |
+| M4 Serialization | done: 9 real txs round-trip byte for byte; tx and prunable hashes match |
+| M5–M9 | not started |
 
 Decisions taken (§5):
 - Q1: BLAKE2b deferred.
