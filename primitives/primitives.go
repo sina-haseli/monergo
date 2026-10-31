@@ -17,6 +17,7 @@ package primitives
 import (
 	"crypto/subtle"
 	"errors"
+	"io"
 
 	"filippo.io/edwards25519"
 	"filippo.io/edwards25519/field"
@@ -184,4 +185,44 @@ func IsInMainSubgroup(p *edwards25519.Point) bool {
 	q := new(edwards25519.Point).ScalarMult(lMinusOne, p)
 	q.Add(q, p)
 	return IsIdentity(q)
+}
+
+// randomLimit is 15·l, the largest multiple of l below 2^256.
+var randomLimit = [32]byte{
+	0xe3, 0x6a, 0x67, 0x72, 0x8b, 0xce, 0x13, 0x29, 0x8f, 0x30, 0x82, 0x8c, 0x0b, 0xa4, 0x10, 0x39,
+	0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0,
+}
+
+func less32(k0, k1 *[32]byte) bool {
+	for n := 31; n >= 0; n-- {
+		if k0[n] < k1[n] {
+			return true
+		}
+		if k0[n] > k1[n] {
+			return false
+		}
+	}
+	return false
+}
+
+// RandomScalar returns a uniformly random non-zero scalar read from rand: 32-byte
+// samples below 15·l are kept and reduced, and zero is rejected.
+//
+// Ported from monero src/crypto/crypto.cpp: random32_unbiased (used by skGen and
+// random_scalar).
+func RandomScalar(rand io.Reader) (*edwards25519.Scalar, error) {
+	var b [32]byte
+	defer clear(b[:])
+	for {
+		if _, err := io.ReadFull(rand, b[:]); err != nil {
+			return nil, err
+		}
+		if !less32(&b, &randomLimit) {
+			continue
+		}
+		s := reduce32(b)
+		if s.Equal(edwards25519.NewScalar()) == 0 {
+			return s, nil
+		}
+	}
 }
