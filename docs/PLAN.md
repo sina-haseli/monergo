@@ -1,6 +1,25 @@
 # monergo — Implementation Plan
 
-Status: **draft, awaiting approval**. Nothing below is implemented yet.
+Status: **approved 2026-10-31** with every recommendation in §5 accepted.
+
+| Milestone | Status |
+|---|---|
+| M0 Scaffold | done |
+| M1 Primitives | done: every in-scope `tests.txt` vector passes (see commit log) |
+| M2–M9 | not started |
+
+Decisions taken (§5):
+- Q1: BLAKE2b deferred.
+- Q2: RNG-dependent and pre-RingCT vectors skipped.
+- Q3: `tools/oxide-check` harness added.
+- Q4: the official CLI, hash-verified and run offline, generates the fixtures.
+- Q5: BIP39 bridge dropped from v1.
+- Q6: fixtures fetched once from a public node.
+- Q8: v1 spends RCT types 4–6 and coinbase.
+- Q9: full gzipped `tests.txt` committed.
+
+`golang.org/x/crypto` is pinned to v0.48.0, the newest release that still supports Go 1.24.
+`golang.org/x/sys` comes in only as its indirect dependency.
 
 > Unaudited. Do not use with real funds until independently audited.
 
