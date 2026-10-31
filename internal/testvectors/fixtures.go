@@ -80,3 +80,45 @@ func LoadBase58UnitTests(t *testing.T) Base58UnitTests {
 	}
 	return b
 }
+
+//go:embed data/chain_fixtures.json
+var chainFixturesJSON []byte
+
+// RingMember is one output referenced by a ring, from /get_outs.
+type RingMember struct {
+	Index  uint64 `json:"index"`
+	Key    string `json:"key"`
+	Mask   string `json:"mask"`
+	TxID   string `json:"txid"`
+	Height uint64 `json:"height"`
+}
+
+// ChainTx is one real transaction with the ring members of each input.
+type ChainTx struct {
+	Name         string         `json:"name"`
+	Network      string         `json:"network"`
+	Hash         string         `json:"hash"`
+	BlockHeight  uint64         `json:"block_height"`
+	PrunableHash string         `json:"prunable_hash"`
+	RCTType      int            `json:"rct_type"`
+	Inputs       int            `json:"inputs"`
+	Outputs      int            `json:"outputs"`
+	Coinbase     bool           `json:"coinbase"`
+	Hex          string         `json:"hex"`
+	Rings        [][]RingMember `json:"rings"`
+}
+
+// LoadChainFixtures parses data/chain_fixtures.json.
+func LoadChainFixtures(t testing.TB) []ChainTx {
+	t.Helper()
+	var f struct {
+		Txs []ChainTx `json:"txs"`
+	}
+	if err := json.Unmarshal(chainFixturesJSON, &f); err != nil {
+		t.Fatal(err)
+	}
+	if len(f.Txs) == 0 {
+		t.Fatal("no chain fixtures")
+	}
+	return f.Txs
+}
