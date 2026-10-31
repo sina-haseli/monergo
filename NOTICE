@@ -1,0 +1,26 @@
+monergo
+Copyright (c) 2026, The monergo Authors
+
+This product contains code ported from the Monero reference implementation:
+
+  monero-project/monero — https://github.com/monero-project/monero
+  Copyright (c) 2014-2026, The Monero Project
+  Parts originally Copyright (c) 2012-2013, The Cryptonote developers
+  Licensed under the BSD 3-Clause License (see LICENSE).
+
+  Ported code is marked with a comment naming the upstream file, function and the
+  commit it was ported from. Test vectors in internal/testvectors/data/ are taken
+  unmodified from the same repository (tests/crypto/tests.txt) and are covered by
+  the same license.
+
+The following projects are used as independent references to cross-check behavior.
+No code is copied from them; if that ever changes, their MIT notices will be added here.
+
+  monero-oxide/monero-oxide       — https://github.com/monero-oxide/monero-oxide
+  monero-oxide/monero-wallet-util — https://github.com/monero-oxide/monero-wallet-util
+  Copyright (c) 2022-2025 Luke Parker and contributors, MIT License.
+
+Third-party Go dependencies:
+
+  filippo.io/edwards25519 — BSD 3-Clause License, Copyright (c) 2009 The Go Authors
+  golang.org/x/crypto     — BSD 3-Clause License, Copyright 2009 The Go Authors

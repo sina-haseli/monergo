@@ -1,0 +1,8 @@
+/xmr-sign
+/xmr-sign.exe
+*.test
+*.out
+/dist/
+testdata/fuzz/**/corpus-local/
+tools/oxide-check/target/
+graphify-out/
