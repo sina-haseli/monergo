@@ -104,8 +104,12 @@ type build struct {
 	addKeys   []*edwards25519.Scalar // one per possible output
 }
 
-// SignWithRand is Sign with an explicit randomness source and full result.
+// SignWithRand is Sign with an explicit randomness source and full result. A
+// nil rng means crypto/rand.
 func SignWithRand(rng io.Reader, k PrivateKeys, req TransferRequest) (*Signed, error) {
+	if rng == nil {
+		rng = rand.Reader
+	}
 	b := &build{rng: rng, acct: k, req: req}
 	defer b.wipe()
 	if err := b.validate(); err != nil {

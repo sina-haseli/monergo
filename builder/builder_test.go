@@ -476,3 +476,14 @@ func TestRejectsOverweightBeforeProving(t *testing.T) {
 		t.Fatalf("err = %v", err)
 	}
 }
+
+// A nil randomness source means crypto/rand, as in decoy.Select; it used to panic.
+func TestSignWithNilRand(t *testing.T) {
+	me, bob := randAccount(t), randAccount(t)
+	req := baseRequest([]Input{receive(t, me, keys.SubaddressIndex{}, 5e12, false)}, []Destination{{addr(t, bob, keys.SubaddressIndex{}), 1e12}})
+	s, err := SignWithRand(nil, me, req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	s.Wipe()
+}
