@@ -56,15 +56,45 @@ func binary() string {
 	return filepath.Join(filepath.Dir(file), "..", "..", "tools", "oxide-check", "target", "release", name)
 }
 
-// Run checks txs with monero-oxide, skipping the test if the harness is not built
-// (cd tools/oxide-check && cargo build --release).
-func Run(t testing.TB, txs []Tx) []Result {
+// Scan asks monero-oxide's wallet Scanner which outputs of a transaction belong to
+// a view pair. The transaction is scanned in a block whose miner transaction is
+// MinerTxHex (any valid coinbase).
+type Scan struct {
+	TxHex        string      `json:"tx_hex"`
+	MinerTxHex   string      `json:"miner_tx_hex"`
+	SpendPub     string      `json:"spend_pub"`
+	ViewSec      string      `json:"view_sec"`
+	Subaddresses [][2]uint32 `json:"subaddresses"`
+}
+
+// Found is one output monero-oxide's scanner attributes to the view pair.
+type Found struct {
+	Index     uint64 `json:"index"`
+	Major     uint32 `json:"major"`
+	Minor     uint32 `json:"minor"`
+	Amount    uint64 `json:"amount"`
+	PaymentID string `json:"payment_id"`
+}
+
+// ScanResult is the scanner's result for one Scan.
+type ScanResult struct {
+	Outputs []Found `json:"outputs"`
+	Error   string  `json:"error"`
+}
+
+func call(t testing.TB, txs []Tx, scans []Scan) ([]Result, []ScanResult) {
 	t.Helper()
 	bin := binary()
 	if _, err := os.Stat(bin); err != nil {
 		t.Skipf("monero-oxide harness not built (%s); see tools/oxide-check/README.md", bin)
 	}
-	req, err := json.Marshal(map[string]any{"txs": txs})
+	if txs == nil {
+		txs = []Tx{}
+	}
+	if scans == nil {
+		scans = []Scan{}
+	}
+	req, err := json.Marshal(map[string]any{"txs": txs, "scans": scans})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -76,12 +106,31 @@ func Run(t testing.TB, txs []Tx) []Result {
 	if err != nil {
 		t.Fatalf("oxide-check: %v: %s", err, stderr.String())
 	}
-	var res []Result
+	var res struct {
+		Txs   []Result     `json:"txs"`
+		Scans []ScanResult `json:"scans"`
+	}
 	if err := json.Unmarshal(out, &res); err != nil {
 		t.Fatalf("oxide-check output: %v", err)
 	}
-	if len(res) != len(txs) {
-		t.Fatalf("oxide-check returned %d results for %d txs", len(res), len(txs))
+	if len(res.Txs) != len(txs) || len(res.Scans) != len(scans) {
+		t.Fatalf("oxide-check returned %d/%d results for %d/%d requests", len(res.Txs), len(res.Scans), len(txs), len(scans))
 	}
+	return res.Txs, res.Scans
+}
+
+// Run checks txs with monero-oxide, skipping the test if the harness is not built
+// (cd tools/oxide-check && cargo build --release).
+func Run(t testing.TB, txs []Tx) []Result {
+	t.Helper()
+	res, _ := call(t, txs, nil)
+	return res
+}
+
+// RunScans scans with monero-oxide's wallet, skipping the test if the harness is not
+// built.
+func RunScans(t testing.TB, scans []Scan) []ScanResult {
+	t.Helper()
+	_, res := call(t, nil, scans)
 	return res
 }

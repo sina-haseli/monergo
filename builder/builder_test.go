@@ -6,6 +6,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"errors"
+	"io"
 	mrand "math/rand/v2"
 	"testing"
 
@@ -459,3 +460,5 @@ func FuzzSign(f *testing.F) {
 		_, _ = SignWithRand(rand.Reader, me, req)
 	})
 }
+
+func randReader() io.Reader { return rand.Reader }

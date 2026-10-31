@@ -8,7 +8,9 @@ publish = false
 
 [dependencies]
 monero-oxide = { git = "https://github.com/monero-oxide/monero-oxide", rev = "a6b46701fb9b331006d7f2f2278bf51f123b1447" }
+monero-wallet = { git = "https://github.com/monero-oxide/monero-oxide", rev = "a6b46701fb9b331006d7f2f2278bf51f123b1447" }
 rand_core = { version = "0.6", features = ["getrandom"] }
+zeroize = "1"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 hex = "0.4"
