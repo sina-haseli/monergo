@@ -4,9 +4,14 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_call: # the release workflow runs the full CI first
 
 permissions:
   contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   test:
@@ -19,8 +24,8 @@ jobs:
     env:
       CGO_ENABLED: "0"
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
           go-version: ${{ matrix.go }}
       - name: Dependencies are only the allowed modules
@@ -36,8 +41,8 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
           go-version: stable
       - uses: golangci/golangci-lint-action@4afd733a84b1f43292c63897423277bb7f4313a9 # v8
@@ -49,8 +54,8 @@ jobs:
   govulncheck:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
           go-version-file: go.mod
       - run: go run golang.org/x/vuln/cmd/govulncheck@latest ./...
@@ -60,8 +65,8 @@ jobs:
     env:
       CGO_ENABLED: "0"
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
           go-version: stable
       - name: Fuzz every parser for 20s each
@@ -86,12 +91,12 @@ jobs:
     # implementation). Dev-only; never part of the Go build.
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
           go-version: stable
       - uses: dtolnay/rust-toolchain@599c45df1a24c1c63ae1129a7e59f46654b8fb66 # 1.89.0, matches tools/oxide-check/rust-toolchain.toml
-      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: |
             ~/.cargo/registry
@@ -105,3 +110,46 @@ jobs:
           out=$(go test -count=1 -v -run 'Oxide' ./verify ./builder)
           echo "$out"
           if echo "$out" | grep -q -- '--- SKIP'; then echo "oxide tests skipped"; exit 1; fi
+
+  e2e-regtest:
+    # Signs real transactions with monergo and submits them to the official
+    # monerod on a private regtest chain (coins are mined locally, no funds
+    # involved); the official wallet then confirms what it received and sent.
+    # See docs/regtest-e2e.md.
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CGO_ENABLED: "0"
+      MONERO_VERSION: v0.18.5.4
+      # From hashes.txt, signed by binaryFate
+      # (81AC 591F E9C4 B65C 5806 AFC3 F0AF 4D46 2A0B DF92).
+      MONERO_SHA256: ba2928962c101b609434bf8c1b43ad59ebe96c5525977284ca599d8bf0f02d10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+      - name: Official Monero CLI (pinned hash)
+        run: |
+          set -euo pipefail
+          f="monero-linux-x64-${MONERO_VERSION}.tar.bz2"
+          curl -fsSL --retry 3 -o "$RUNNER_TEMP/$f" "https://downloads.getmonero.org/cli/$f"
+          echo "${MONERO_SHA256}  $RUNNER_TEMP/$f" | sha256sum -c -
+          mkdir -p "$RUNNER_TEMP/monero"
+          tar -xjf "$RUNNER_TEMP/$f" -C "$RUNNER_TEMP/monero" --strip-components=1
+          echo "MONERGO_MONEROD=$RUNNER_TEMP/monero/monerod" >> "$GITHUB_ENV"
+          echo "MONERGO_WALLET_RPC=$RUNNER_TEMP/monero/monero-wallet-rpc" >> "$GITHUB_ENV"
+      - name: Regtest end-to-end (must not skip)
+        env:
+          MONERGO_E2E_LOGDIR: ${{ runner.temp }}/e2e-logs
+        run: |
+          mkdir -p "$MONERGO_E2E_LOGDIR"
+          set -o pipefail
+          go test -count=1 -v -timeout 25m ./internal/e2e | tee "$RUNNER_TEMP/e2e.out"
+          if grep -q -- '--- SKIP' "$RUNNER_TEMP/e2e.out"; then echo "e2e test skipped"; exit 1; fi
+      - name: Daemon and wallet logs
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: e2e-logs
+          path: ${{ runner.temp }}/e2e-logs
