@@ -180,3 +180,14 @@ func TestIsInMainSubgroup(t *testing.T) {
 		t.Fatal("G + torsion accepted")
 	}
 }
+
+// SecretScalarFromCanonical accepts exactly what sc_check accepts.
+func TestSecretScalarFromCanonicalVectors(t *testing.T) {
+	testvectors.Run(t, "check_scalar", func(t *testing.T, v testvectors.Vector) {
+		s, want := v.Hex32(t, 0), v.Bool(t, 1)
+		_, err := SecretScalarFromCanonical(s)
+		if (err == nil) != want {
+			t.Fatalf("SecretScalarFromCanonical(%x) ok=%v, want %v", s, err == nil, want)
+		}
+	})
+}

@@ -2,6 +2,7 @@ package decoy
 
 import (
 	"crypto/rand"
+	"errors"
 	"math"
 	"testing"
 )
@@ -97,5 +98,15 @@ func TestRejects(t *testing.T) {
 	}
 	if _, _, err := Select(rand.Reader, chain(1000, 10), 1e9, 16); err == nil {
 		t.Error("real output beyond the distribution accepted")
+	}
+}
+
+type failingReader struct{}
+
+func (failingReader) Read([]byte) (int, error) { return 0, errors.New("no entropy") }
+
+func TestSelectReportsRNGFailure(t *testing.T) {
+	if _, _, err := Select(failingReader{}, chain(1000, 10), 5000, 16); err == nil {
+		t.Fatal("RNG failure not reported")
 	}
 }

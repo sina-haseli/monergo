@@ -17,6 +17,7 @@ import (
 	"crypto/rand"
 	"encoding/binary"
 	"errors"
+	"fmt"
 	"io"
 	"math"
 	"sort"
@@ -161,7 +162,13 @@ func (p *Picker) Pick() uint64 {
 // This is a simplification of wallet2::get_outs: it does not fetch extra outputs
 // to replace locked or blacklisted ones. Callers should fetch the picked outputs
 // with /get_outs and retry any that are not unlocked.
-func Select(rng io.Reader, rctOffsets []uint64, real uint64, ringSize int) ([]uint64, int, error) {
+func Select(rng io.Reader, rctOffsets []uint64, real uint64, ringSize int) (ring []uint64, pos int, err error) {
+	// A failing caller-supplied reader panics deep in sampling; report it instead.
+	defer func() {
+		if r := recover(); r != nil {
+			ring, pos, err = nil, 0, fmt.Errorf("decoy: randomness source failed: %v", r)
+		}
+	}()
 	if rng == nil {
 		rng = rand.Reader
 	}
@@ -184,11 +191,11 @@ func Select(rng io.Reader, rctOffsets []uint64, real uint64, ringSize int) ([]ui
 			picked[i] = true
 		}
 	}
-	ring := make([]uint64, 0, ringSize)
+	ring = make([]uint64, 0, ringSize)
 	for i := range picked {
 		ring = append(ring, i)
 	}
 	sort.Slice(ring, func(a, b int) bool { return ring[a] < ring[b] })
-	pos := sort.Search(len(ring), func(i int) bool { return ring[i] >= real })
+	pos = sort.Search(len(ring), func(i int) bool { return ring[i] >= real })
 	return ring, pos, nil
 }

@@ -316,6 +316,7 @@ func (b *build) run() (*Signed, error) {
 	// made once, at the end.
 	var fee uint64
 	var d *draft
+	var weight uint64
 	for iter := 0; ; iter++ {
 		if iter > 8 {
 			return nil, errors.New("builder: fee did not converge")
@@ -327,6 +328,7 @@ func (b *build) run() (*Signed, error) {
 		if err != nil {
 			return nil, err
 		}
+		weight = w
 		need, err := feeFromWeight(b.req.FeePerByte, w, b.req.FeeQuantizationMask)
 		if err != nil {
 			return nil, err
@@ -338,6 +340,10 @@ func (b *build) run() (*Signed, error) {
 	}
 	if fee > b.req.MaxFee {
 		return nil, fmt.Errorf("%w: need %d, max %d", ErrFeeTooHigh, fee, b.req.MaxFee)
+	}
+	// Reject an over-weight transaction before spending time on proofs.
+	if weight >= protocol.MaxTxWeight {
+		return nil, invalid("transaction weight %d exceeds %d", weight, protocol.MaxTxWeight)
 	}
 	if err := d.prove(b); err != nil {
 		return nil, err
@@ -682,7 +688,7 @@ func (d *draft) prove(b *build) error {
 		return err
 	}
 	for i, s := range b.sources {
-		x, err := primitives.ScalarFromCanonical(s.opened.OneTimeSecret)
+		x, err := primitives.SecretScalarFromCanonical(s.opened.OneTimeSecret)
 		if err != nil {
 			return err
 		}

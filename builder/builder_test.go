@@ -462,3 +462,17 @@ func FuzzSign(f *testing.F) {
 }
 
 func randReader() io.Reader { return rand.Reader }
+
+// Too many inputs: rejected for weight before any proving.
+func TestRejectsOverweightBeforeProving(t *testing.T) {
+	me, bob := randAccount(t), randAccount(t)
+	var ins []Input
+	for i := 0; i < 220; i++ {
+		ins = append(ins, receive(t, me, keys.SubaddressIndex{}, 1e10, false))
+	}
+	req := baseRequest(ins, []Destination{{addr(t, bob, keys.SubaddressIndex{}), 1e9}})
+	req.MaxFee = 1e15
+	if _, err := SignWithRand(rand.Reader, me, req); !errors.Is(err, ErrInvalidRequest) {
+		t.Fatalf("err = %v", err)
+	}
+}

@@ -45,7 +45,7 @@ var (
 func (s *SecretKey) Wipe() { clear(s[:]) }
 
 func (s *SecretKey) scalar() (*edwards25519.Scalar, error) {
-	x, err := primitives.ScalarFromCanonical(*s)
+	x, err := primitives.SecretScalarFromCanonical(*s)
 	if err != nil {
 		return nil, ErrInvalidSecretKey
 	}

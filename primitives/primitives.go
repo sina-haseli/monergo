@@ -72,7 +72,9 @@ func reduce32(s [32]byte) *edwards25519.Scalar {
 	return r
 }
 
-// ScalarFromCanonical decodes a canonical scalar, rejecting values >= l.
+// ScalarFromCanonical decodes a canonical public scalar (signature responses,
+// proof scalars), rejecting values >= l. It is not constant time; use
+// SecretScalarFromCanonical for secrets.
 func ScalarFromCanonical(s [32]byte) (*edwards25519.Scalar, error) {
 	r, err := new(edwards25519.Scalar).SetCanonicalBytes(s[:])
 	if err != nil {
@@ -225,4 +227,21 @@ func RandomScalar(rand io.Reader) (*edwards25519.Scalar, error) {
 			return s, nil
 		}
 	}
+}
+
+// SecretScalarFromCanonical decodes a secret scalar in constant time, rejecting
+// values >= l. SetCanonicalBytes returns early depending on the bytes, which would
+// leak timing about a secret; here the value is reduced (constant time) and the
+// reduction compared with the input (constant time), which is equal exactly when
+// the input is canonical. The equivalent check upstream is sc_check, which is
+// branch-free.
+func SecretScalarFromCanonical(s [32]byte) (*edwards25519.Scalar, error) {
+	r := reduce32(s)
+	enc := [32]byte(r.Bytes())
+	defer clear(enc[:])
+	if subtle.ConstantTimeCompare(enc[:], s[:]) != 1 {
+		WipeScalar(r)
+		return nil, ErrInvalidScalar
+	}
+	return r, nil
 }
