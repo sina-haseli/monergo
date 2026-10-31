@@ -158,3 +158,17 @@ func (a AccountKeys) OneTimeSecretKey(d KeyDerivation, outputIndex uint64, idx S
 	mScalar.Add(s1, mScalar)
 	return SecretKey(mScalar.Bytes()), nil
 }
+
+// AccountFromRecoveryKey derives the account keys from a 32-byte recovery key (the
+// value a 25-word seed encodes): spend = sc_reduce32(key), view =
+// sc_reduce32(Keccak256(spend)).
+//
+// Ported from monero src/cryptonote_basic/account.cpp: account_base::generate
+// (recover = true, two_random = false) with crypto_ops::generate_keys.
+func AccountFromRecoveryKey(recovery [32]byte) AccountKeys {
+	spend := primitives.ScReduce32(recovery)
+	second := primitives.Keccak256(spend[:])
+	view := primitives.ScReduce32(second)
+	clear(second[:])
+	return AccountKeys{Spend: SecretKey(spend), View: SecretKey(view)}
+}
