@@ -9,7 +9,9 @@ Status: **approved 2026-10-31** with every recommendation in §5 accepted.
 | M2 Addresses | done: 90 wallet-rpc addresses + upstream base58 unit tests |
 | M3 Seed | done: 3 wallet seeds round-trip to the reference keys and mnemonics |
 | M4 Serialization | done: 9 real txs round-trip byte for byte; tx and prunable hashes match |
-| M5–M9 | not started |
+| M5 Verification | done: 30 real CLSAGs and 6 real BP+ verify; every tampered field rejected |
+| M6 Provers | done: own CLSAG/BP+ pass our verifier and monero-oxide (8 tx shapes) |
+| M7–M9 | not started |
 
 Decisions taken (§5):
 - Q1: BLAKE2b deferred.
