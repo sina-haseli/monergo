@@ -140,10 +140,15 @@ func (v Vector) Arg(t *testing.T, i int) string {
 	return v.Args[i]
 }
 
-// Hex returns argument i decoded from hex.
+// Hex returns argument i decoded from hex. As in upstream tests/io.h
+// (get(std::istream&, std::vector<char>&)), the literal "x" is the empty string.
 func (v Vector) Hex(t *testing.T, i int) []byte {
 	t.Helper()
-	b, err := hex.DecodeString(v.Arg(t, i))
+	s := v.Arg(t, i)
+	if s == "x" {
+		return []byte{}
+	}
+	b, err := hex.DecodeString(s)
 	if err != nil {
 		t.Fatalf("line %d arg %d: %v", v.Line, i, err)
 	}
