@@ -78,9 +78,12 @@ Every guarantee below is enforced in `builder` and covered by tests.
   monero-oxide, an independent Rust implementation, with matching hash and weight.
   monero-oxide's wallet scanner finds the intended outputs, amounts, subaddresses and
   payment IDs.
+- **Official daemon.** On a private regtest chain, the official `monerod` accepts and mines
+  the transactions monergo signs, the official wallet sees the right amounts, payment IDs and
+  change, and a double spend is rejected (`internal/e2e`, run in CI).
 - **Fuzzing.** Every parser and the whole signer are fuzzed in CI.
 
 Not yet done:
 - an independent audit;
-- a stagenet end-to-end run (`docs/stagenet-e2e.md`);
+- a public testnet or stagenet run (`docs/testnet-e2e.md`);
 - a small mainnet canary.

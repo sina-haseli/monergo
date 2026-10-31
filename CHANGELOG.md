@@ -34,4 +34,16 @@ First version. **Unaudited.**
   and the `InputSigner` interface.
 - `decoy`: wallet2 gamma decoy selection.
 - `cmd/xmr-sign` (offline signing CLI) and `tools/xmr-prepare` (assembles a request from
-  wallet-rpc and a daemon).
+  wallet-rpc and a daemon). `xmr-prepare` accepts several `-to ADDRESS:AMOUNT` destinations
+  and refuses daemons that are not on hard fork v16.
+- `decoy.SelectExcluding`, to redraw ring members a daemon reports as locked.
+- A regtest end-to-end test against the official `monerod` and `monero-wallet-rpc`
+  (`internal/e2e`), run in CI.
+- Release workflow: runs the full CI, checks that builds are reproducible, attests build
+  provenance and drafts the release from this changelog.
+
+### Fixed
+
+- `builder.SignWithRand(nil, ...)` panicked; a nil reader now means `crypto/rand`.
+- `xmr-prepare` discarded the whole ring when one decoy was locked, and gave up on small
+  chains; it now redraws only the locked members.

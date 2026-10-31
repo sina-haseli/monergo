@@ -12,9 +12,9 @@ Status: **approved 2026-10-31** with every recommendation in §5 accepted.
 | M5 Verification | done: 30 real CLSAGs and 6 real BP+ verify; every tampered field rejected |
 | M6 Provers | done: own CLSAG/BP+ pass our verifier and monero-oxide (8 tx shapes) |
 | M7 Builder | done: wallet2-equivalent construction; recipients decode amounts; oxide accepts with matching hash and weight |
-| M8 Stagenet E2E | **blocked**: tooling and `docs/stagenet-e2e.md` ready, daemon side tested live; needs a funded stagenet wallet (Q7) |
+| M8 End-to-end | **regtest done**: `internal/e2e` signs 8 tx shapes, the official monerod v0.18.5.4 accepts and mines them, the official wallet confirms amounts, payment IDs and change, and rejects a double spend; runs in CI (`docs/regtest-e2e.md`). **Public network pending**: a testnet or stagenet run needs free faucet coins (`docs/testnet-e2e.md`) |
 | M9 Hardening | done: fuzz targets for all parsers + signer, golangci-lint clean, CI matrix + oxide job, benchmarks |
-| Production pass | done: monero-oxide wallet scans built txs; constant-time secret decoding; early weight limit; SECURITY.md threat model; govulncheck, pinned actions, Dependabot, release workflow. Remaining before real funds: M8, independent audit, mainnet canary |
+| Production pass | done: monero-oxide wallet scans built txs; constant-time secret decoding; early weight limit; SECURITY.md threat model; govulncheck, pinned actions, Dependabot, release workflow. Remaining before real funds: the public testnet/stagenet run, independent audit, mainnet canary |
 
 Deviations from upstream, all deliberate:
 - The BP+ prover uses constant-time multiexps.
@@ -308,12 +308,14 @@ copies (one flipped bit in each field) must fail. No prover code lands before th
     `oxide-check`.
   - Every rejection rule has a test.
 
-### M8 — Stagenet end-to-end
+### M8 — End-to-end (regtest, then testnet or stagenet)
 - `cmd/xmr-sign` builds a tx from a JSON payload assembled from a stagenet wallet's outputs
   (a helper script gathers the rings via `get_outs`).
 - Submit with `send_raw_transaction`; it must be accepted and mined.
-- Capture the payload, tx hash and block height in `docs/stagenet-e2e.md`, with the exact
-  steps. Needs funded stagenet keys and a node (Q7).
+- Capture the payload, tx hash and block height in `docs/testnet-e2e.md`, with the exact
+  steps. Needs free testnet or stagenet coins and a node (Q7).
+- Before that, `internal/e2e` runs the same flow against the official monerod on a private
+  regtest chain, where coins are mined locally (`docs/regtest-e2e.md`).
 
 ### M9 — Hardening
 - `go test -fuzz` targets: base58, address decode, seed decode, tx parse (round-trip

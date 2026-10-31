@@ -16,8 +16,13 @@ See [docs/PLAN.md](docs/PLAN.md) for milestones and evidence.
 - **Provers and builder:** every CLSAG, BP+ and full transaction we produce passes our
   verifier and [monero-oxide](https://github.com/monero-oxide/monero-oxide) (an independent
   Rust implementation), with matching hash and weight.
-- **Stagenet end-to-end:** prepared but **not yet run**. It needs a funded stagenet wallet;
-  see [docs/stagenet-e2e.md](docs/stagenet-e2e.md).
+- **End to end against the official daemon:** on a private regtest chain, the official
+  `monerod` v0.18.5.4 accepts and mines transactions monergo signs (8 shapes, including
+  subaddresses, integrated addresses, 16 outputs, a 19-input sweep). The official wallet
+  confirms what arrived, and a double spend is rejected. No funds are involved; CI runs it on
+  every push ([docs/regtest-e2e.md](docs/regtest-e2e.md)).
+- **Public test network:** a testnet or stagenet run with free faucet coins is prepared but
+  **not yet run** ([docs/testnet-e2e.md](docs/testnet-e2e.md)).
 - **Hard forks:** only v16 transactions can be built. FCMP++ (v17) is not supported, and
   the signer refuses any other hard-fork version.
 
@@ -36,8 +41,8 @@ Done:
   guarantees, and what the calling policy must handle.
 
 Still required before real funds:
-1. The stagenet end-to-end run in [docs/stagenet-e2e.md](docs/stagenet-e2e.md). It needs a
-   funded stagenet wallet.
+1. A public testnet or stagenet run, [docs/testnet-e2e.md](docs/testnet-e2e.md). Faucet
+   coins are free.
 2. An independent security audit.
 3. A small mainnet canary transaction.
 
@@ -120,10 +125,22 @@ Other entry points:
 CGO_ENABLED=0 go test ./...
 go test -run '^$' -fuzz FuzzSign -fuzztime 1m ./builder
 (cd tools/oxide-check && cargo build --release) && go test -run Oxide -v ./verify ./builder
+MONERGO_MONEROD=/path/monerod MONERGO_WALLET_RPC=/path/monero-wallet-rpc go test -v ./internal/e2e
 ```
 
 Fixtures and their provenance are listed in
 [internal/testvectors/README.md](internal/testvectors/README.md).
+
+## Releasing
+
+1. Move the `[Unreleased]` entries in `CHANGELOG.md` under `## [X.Y.Z] - YYYY-MM-DD`.
+2. Tag and push: `git tag -s vX.Y.Z && git push origin vX.Y.Z`.
+3. `.github/workflows/release.yml` runs the full CI (including the oxide cross-check and the
+   regtest end-to-end test), builds `xmr-sign` and `xmr-prepare` for five platforms twice
+   and checks that both builds are byte-identical, writes `SHA256SUMS`, attests build
+   provenance, and opens a **draft** release with the changelog section as notes.
+4. Review the draft and publish it. Users can check a binary with
+   `gh attestation verify <file> --repo sina-haseli/monergo`.
 
 ## License
 

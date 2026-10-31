@@ -1,11 +1,33 @@
-# Stagenet end-to-end test (M8)
+# Testnet / stagenet end-to-end test (M8)
 
-This procedure builds a transaction with monergo, submits it to stagenet, and confirms
-that the network accepts and mines it.
+This procedure builds a transaction with monergo, submits it to a public test network, and
+confirms that the network accepts and mines it. Testnet and stagenet coins are free (from a
+faucet) and have no value, so no real funds are involved.
 
-> Unaudited. Use stagenet only. Stagenet coins have no value.
+> Unaudited. Use testnet or stagenet only.
 
-**Status: not yet run.** It needs a funded stagenet wallet. The daemon side of
+For a run that needs no coins and no network at all, use the private regtest chain in
+[regtest-e2e.md](regtest-e2e.md); CI runs it on every push. This document is the next step:
+the real peer-to-peer network, real decoys and real relay rules.
+
+## Testnet or stagenet?
+
+Both work while they run hard fork v16 (checked 2026-10-31: testnet at height 3,120,409 and
+stagenet at 2,240,807 both report `"version": 16` from `hard_fork_info`). Testnet usually
+forks to new consensus rules first, so it will be the first to move to FCMP++ (v17).
+`xmr-prepare` checks `hard_fork_info` and refuses when the daemon is not on v16.
+
+| | Testnet | Stagenet |
+|---|---|---|
+| `-network` | `testnet` | `stagenet` |
+| Wallet and daemon flag | `--testnet` | `--stagenet` |
+| Daemon RPC port | 28081 | 38081 |
+| Public node (example) | `http://testnet.xmr-tw.org:28081` | `http://stagenet.xmr-tw.org:38081` |
+| Primary address starts with | `9` | `5` |
+
+The commands below use stagenet; for testnet swap the flag, the port and `-network`.
+
+**Status: not yet run.** It needs a wallet funded from a faucet. The daemon side of
 `xmr-prepare` has been exercised against `stagenet.xmr-tw.org` with a real stagenet output.
 That run covered decoy selection over the live output distribution, `/get_outs`, unlock
 checks and the real-member check. Signing and submission still need your funds. Record the
