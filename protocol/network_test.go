@@ -34,3 +34,18 @@ func TestPrefixesDistinct(t *testing.T) {
 		}
 	}
 }
+
+func TestRulesForCurrentHardFork(t *testing.T) {
+	r, err := RulesFor(CurrentHardFork)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if r.RingSize != 16 || r.MinOutputs != 2 || !r.ViewTags || r.RCTType != 6 {
+		t.Fatalf("unexpected rules %+v", r)
+	}
+	for _, hf := range []uint8{15, 17} {
+		if _, err := RulesFor(hf); err == nil {
+			t.Errorf("hard fork %d accepted", hf)
+		}
+	}
+}
