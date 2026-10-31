@@ -31,7 +31,8 @@ Decisions taken (§5):
 - Q8: v1 spends RCT types 4–6 and coinbase.
 - Q9: full gzipped `tests.txt` committed.
 
-`golang.org/x/crypto` is pinned to v0.48.0, the newest release that still supports Go 1.24.
+Toolchain: Go 1.27 (`go 1.27.0`, `toolchain go1.27.3`) with `golang.org/x/crypto` v0.58.0, the
+newest releases as of 2026-10-31. This replaces the original Go 1.24 minimum, at your request.
 `golang.org/x/sys` comes in only as its indirect dependency.
 
 > Unaudited. Do not use with real funds until independently audited.
@@ -161,7 +162,7 @@ Dependency direction: `internal/varint` → `primitives` → `keys`, `ringct/*` 
 - **Randomness.** `crypto/rand` in production. Internal functions take an `io.Reader`, so tests
   can inject a deterministic stream and compare against fixtures.
 - **Dependencies.** Only `filippo.io/edwards25519` and `golang.org/x/crypto/sha3`, plus the
-  standard library. `go.mod` targets `go 1.24` (local toolchain: 1.25.7). CI fails if
+  standard library. `go.mod` targets `go 1.27.0` (toolchain go1.27.3). CI fails if
   `CGO_ENABLED=0 go build ./...` fails or if `go.mod` gains a module.
 - **Fixtures.** Every committed fixture gets a line in `internal/testvectors/README.md` with
   its source, upstream commit or block height, retrieval command and SHA-256. Tests never
@@ -318,7 +319,7 @@ copies (one flipped bit in each field) must fail. No prover code lands before th
   property), extra parse, and the `TransferRequest` JSON.
 - golangci-lint config: govet, staticcheck, errcheck, gosec, and a rule forbidding
   `math/rand`.
-- GitHub Actions matrix (Linux, macOS, Windows × Go 1.24 / stable, `CGO_ENABLED=0`).
+- GitHub Actions matrix (Linux, macOS, Windows × Go 1.27 / stable, `CGO_ENABLED=0`).
 - Benchmarks for `Sign` (1-in/2-out and 4-in/16-out), CLSAG and BP+.
 - `decoy` (gamma, `wallet2::gamma_picker`) also lands here if not earlier. It is a port of
   the distribution, not the RNG, so it is tested statistically.

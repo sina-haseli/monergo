@@ -14,7 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        go: ["1.24.x", "stable"]
+        go: ["1.27.x", "stable"]
     runs-on: ${{ matrix.os }}
     env:
       CGO_ENABLED: "0"
@@ -43,6 +43,8 @@ jobs:
       - uses: golangci/golangci-lint-action@v8
         with:
           version: v2.15.0
+          # Build the linter with the job's Go so it understands go 1.27 modules.
+          install-mode: goinstall
 
   fuzz:
     runs-on: ubuntu-latest
