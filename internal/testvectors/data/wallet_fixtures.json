@@ -1,0 +1,525 @@
+{
+  "generator": "tools/fixtures/gen_wallet_fixtures.py",
+  "networks": {
+    "mainnet": [
+      {
+        "seed": "velvet lymph giddy number token physics poetry unquoted nibs useful sabotage limits benches lifestyle eden nitrogen anvil fewest avoid batch vials washing fences goat unquoted",
+        "spend_key": "148d78d2aba7dbca5cd8f6abcfb0b3c009ffbdbea1ff373d50ed94d78286640e",
+        "view_key": "49774391fa5e8d249fc2c5b45dadef13534bf2483dede880dac88f061e809100",
+        "mnemonic": "velvet lymph giddy number token physics poetry unquoted nibs useful sabotage limits benches lifestyle eden nitrogen anvil fewest avoid batch vials washing fences goat unquoted",
+        "addresses": [
+          {
+            "major": 0,
+            "minor": 0,
+            "address": "42ey1afDFnn4886T7196doS9GPMzexD9gXpsZJDwVjeRVdFCSoHnv7KPbBeGpzJBzHRCAs9UxqeoyFQMYbqSWYTfJJQAWDm"
+          },
+          {
+            "major": 0,
+            "minor": 1,
+            "address": "84QRUYawRNrU3NN1VpFRndSukeyEb3Xpv8qZjjsoJZnTYpDYceuUTpog13D7qPxpviS7J29bSgSkR11hFFoXWk2yNdsR9WF"
+          },
+          {
+            "major": 0,
+            "minor": 2,
+            "address": "85M4M1RVRcoEeC8sdSxN1ef6GhQYChSfKPWkB4FLKYJiSWuMXXT4Ewv8BHCRzSJB4ZYvXUcFxN4DPcVu6uwoPNRvQ1QwaXB"
+          },
+          {
+            "major": 0,
+            "minor": 3,
+            "address": "862oiydSvvBUynhpD6peZZFGDJM2QRskfckUMUgkZJPKXodj1qC8kcFRgc9iDEB68XfDGUvDKBy7h5ikYEbfP2upBK9oVXS"
+          },
+          {
+            "major": 0,
+            "minor": 4,
+            "address": "8ALoE4nLJsJFXEkxd3MoBqe9gAYM7pMWkh63atyfBZb42gZRjYjnQZ9fh4UTpG1CdRbbUxjAZNQGsPkZWpPxNDLXEWXRhSM"
+          },
+          {
+            "major": 0,
+            "minor": 5,
+            "address": "89XzKjCSyJtXFgtX68a1hsAxBCy3omnwTa31jz6sDPiNZ7m4yfyN5d3YQJkHKu2h4k1GAtGegN8MsCPb3DQmeCEMDRPggQt"
+          },
+          {
+            "major": 1,
+            "minor": 0,
+            "address": "82pP87g1Vkd3LUMssBCumk3MfyEsFqLAaGDf6oxddu61EgSFzt8gCwUD4tr3kp9TUfdPs2CnpD7xLZzyC1Ei9UsW3oyCWDf"
+          },
+          {
+            "major": 1,
+            "minor": 1,
+            "address": "87qyoPVaEcWikVBmG1TaP1KumZ3hB3Q5f4wZRjuppNdwYjWzs2RgbLYQgtpdu2YdoTT3EZhiUGaPJQt2FsykeFZbCtaGXU4"
+          },
+          {
+            "major": 1,
+            "minor": 2,
+            "address": "87KfgTZ8ER5D3Frefqnrqif11TjVsTPaTcp37kqqKMrdDRUhpJRczeR7KiBmSHF32UJLP3HHhKUDmEQyJrv2mV8yFDCq8eB"
+          }
+        ],
+        "integrated": {
+          "payment_id": "1234567890abcdef",
+          "address": "4CMe2PUhs4J4886T7196doS9GPMzexD9gXpsZJDwVjeRVdFCSoHnv7KPbBeGpzJBzHRCAs9UxqeoyFQMYbqSWYTfSbyvqonpbf2Tzcs8kx"
+        }
+      },
+      {
+        "seed": "peeled mixture ionic radar utopia puddle buying illness nuns gadget river spout cavernous bounced paradise drunk looking cottage jump tequila melting went winter adjust spout",
+        "spend_key": "609ae8e228a871c37b61292ff898dd144db5d784804cc4a971bf74aff3acb70a",
+        "view_key": "3c2afc906377b0c596136916726e904719350eb9535e286afa703641dd6a7f03",
+        "mnemonic": "peeled mixture ionic radar utopia puddle buying illness nuns gadget river spout cavernous bounced paradise drunk looking cottage jump tequila melting went winter adjust spout",
+        "addresses": [
+          {
+            "major": 0,
+            "minor": 0,
+            "address": "44Kbx4sJ7JDRDV5aAhLJzQCjDz2ViLRduE3ijDZu3osWKBjMGkV1XPk4pfDUMqt1Aiezvephdqm6YD19GKFD9ZcXVUTp6BW"
+          },
+          {
+            "major": 0,
+            "minor": 1,
+            "address": "8AL8WYrv5YpFrNEyjkavWuTeMhU1xDE8AUkBwT3vhrmSTw98otBzwC9FxAPC5wH2DGPQmnyC6oiV2WAzWmXWLVpz2eeYhah"
+          },
+          {
+            "major": 0,
+            "minor": 2,
+            "address": "86s1EdRcB2sXhxvrjQLHm6Kpv81He2JEt9BFBQ6WGWa78JJt5QNogZ9ihG1ce99fQKDiSvMkVARng6PCKGH5rCGwSw3FsM6"
+          },
+          {
+            "major": 0,
+            "minor": 3,
+            "address": "86urSZdCd2e3UWXbidm4fpfWLBc2ASWyDC39mVcGyTjT6BBro7g3Tj3TwaeFatkztiCvDjhR5ZXzZFcArB8ZuLxSSwehKUz"
+          },
+          {
+            "major": 0,
+            "minor": 4,
+            "address": "83pnfJVSYytgzn4sU89iHt18cFs7VNA8MG243VqZdTSn1xEdhbAE52niKnfwqgG1myXUUd4HdEwPeTiJis3q4FHDAbvoTMQ"
+          },
+          {
+            "major": 0,
+            "minor": 5,
+            "address": "831Yq8meNrMKBRWxdKm5W8Jc7Kz7WqMsiPcyodsEHqqkDCC9voZpq2yhi6zD9h3tvCZjkCSziSobiPXWskwZQF4VRNJdVBd"
+          },
+          {
+            "major": 1,
+            "minor": 0,
+            "address": "85AQM27eXrsBmJss9HmUbWbzKz61968qHiQkB8T1fyV48MH8phRQq7cH3xozSgF8cgWLiCDmeoGHv7i9Fc13FDowDJg4Yze"
+          },
+          {
+            "major": 1,
+            "minor": 1,
+            "address": "8846LcazcRqVnHTcyWbMmfLRLRnoAgQhYTwwFDpb14GjLyzbBN6RMCAZYoniBfUCSxbdW6bHVUfo2TzuWWSNYVhw3AJMsJR"
+          },
+          {
+            "major": 1,
+            "minor": 2,
+            "address": "889nbyo4Tk1WutXjhUBy3fMk7T8FoWtAZN4asU5B57DvYCNWhRVPNANZbdM21TwpebVatbiBPbEQhV5WnQYkLnBuEGoLr5t"
+          }
+        ],
+        "integrated": {
+          "payment_id": "1234567890abcdef",
+          "address": "4E2GxsgniZjRDV5aAhLJzQCjDz2ViLRduE3ijDZu3osWKBjMGkV1XPk4pfDUMqt1Aiezvephdqm6YD19GKFD9ZcXjAQXDireo9EU4LyEfy"
+        }
+      },
+      {
+        "seed": "dilute gutter certain antics pamphlet macro enjoy left slid guarded bogeys upload nineteen bomb jubilee enhanced irritate turnip eggs swung jukebox loudly reduce sedan slid",
+        "spend_key": "930d5eca868a20e194ab914da9bd17cb5fd02e5562f9f474468725a17e2de60d",
+        "view_key": "472e9b7766c3b25297dab1736fd792bf7077a2cc6183e95f81809f899b630705",
+        "mnemonic": "dilute gutter certain antics pamphlet macro enjoy left slid guarded bogeys upload nineteen bomb jubilee enhanced irritate turnip eggs swung jukebox loudly reduce sedan slid",
+        "addresses": [
+          {
+            "major": 0,
+            "minor": 0,
+            "address": "46r4nYSevkfBUMhuykdK3gQ98XDqDTYW1hNLaXNvjpsJaSbNtdXh1sKMsdVgqkaihChAzEy29zEDPMR3NHQvGoZCLGwTerK"
+          },
+          {
+            "major": 0,
+            "minor": 1,
+            "address": "88aMN73RVsm8yAYjN6qRnuM6x3GEdJVTdUrfZaEDMCFPEfceg7XVVqEgGoF7jBpkg6J8TLLCcQkQwQff5WGyynLTUUbAoT7"
+          },
+          {
+            "major": 0,
+            "minor": 2,
+            "address": "8AJ5KGUJDr1YV9MEmdByy82xnv3j6edAbB5dyPpr3yxc33aqtBhNSdQewxsEcY4PuthumYMrVSjFVDCrp9wGKPBiQbhyUnz"
+          },
+          {
+            "major": 0,
+            "minor": 3,
+            "address": "82tZ42T2KJ33ZUQGo9BbuZGpQQxDF4RjBK2sezcsyUW3WjnWf6QtoVMghDhJJ96XjNTycvDrbdcuHL12bjJCCoroGo5GR5v"
+          },
+          {
+            "major": 0,
+            "minor": 4,
+            "address": "82xsVZG7oqXdsn6vj9U92ySJbL5oo9kks2UfqX8YD4HNXibCAaFmALeA3NCqqhw8cxM5KVNMsoBupXNwbpUquw1WULccxTv"
+          },
+          {
+            "major": 0,
+            "minor": 5,
+            "address": "8BENJPhkFRH7BUE34kkwcVfnwWkLtdLanKgSPeFz2UzTUFcbSmp7yXYfZ54WgBRMcF8fMCfizn4UzUfN6CMVCggS9eMx4Cr"
+          },
+          {
+            "major": 1,
+            "minor": 0,
+            "address": "88EDE9gxRoJQyjiVXP58QihiGGttQtETJVeLsqDXtXgCJczk7ftWo7k6iKmf4UxGt4ULU3zadRyXf72nPUKyj8cBPGrrZAK"
+          },
+          {
+            "major": 1,
+            "minor": 1,
+            "address": "89GN1tyLsRNXfJxKj1nZsKGK1gBsoALDpeMwnjQWyzqZV6eRb36NEWWMygcdRKGsunQDST1ZuE6VpJs1Hqc5xAvwMaUQqYb"
+          },
+          {
+            "major": 1,
+            "minor": 2,
+            "address": "8AbKGUw311u7aWgey9uM1CDKhGEF9FnxVXPFAkiSB8c3N9htFKzCVaAdyLL78barecGQx4GfB7kjsfccZeBXxksfN26ZpDD"
+          }
+        ],
+        "integrated": {
+          "payment_id": "1234567890abcdef",
+          "address": "4GYjoMG9Y2BBUMhuykdK3gQ98XDqDTYW1hNLaXNvjpsJaSbNtdXh1sKMsdVgqkaihChAzEy29zEDPMR3NHQvGoZCVSuN5XiCwCpTyGSah3"
+        }
+      }
+    ],
+    "testnet": [
+      {
+        "seed": "velvet lymph giddy number token physics poetry unquoted nibs useful sabotage limits benches lifestyle eden nitrogen anvil fewest avoid batch vials washing fences goat unquoted",
+        "spend_key": "148d78d2aba7dbca5cd8f6abcfb0b3c009ffbdbea1ff373d50ed94d78286640e",
+        "view_key": "49774391fa5e8d249fc2c5b45dadef13534bf2483dede880dac88f061e809100",
+        "mnemonic": "velvet lymph giddy number token physics poetry unquoted nibs useful sabotage limits benches lifestyle eden nitrogen anvil fewest avoid batch vials washing fences goat unquoted",
+        "addresses": [
+          {
+            "major": 0,
+            "minor": 0,
+            "address": "9tCWVqKUY9t4886T7196doS9GPMzexD9gXpsZJDwVjeRVdFCSoHnv7KPbBeGpzJBzHRCAs9UxqeoyFQMYbqSWYTfJHdcNjL"
+          },
+          {
+            "major": 0,
+            "minor": 1,
+            "address": "Ba8YmVnJBziU3NN1VpFRndSukeyEb3Xpv8qZjjsoJZnTYpDYceuUTpog13D7qPxpviS7J29bSgSkR11hFFoXWk2yNbGhVXz"
+          },
+          {
+            "major": 0,
+            "minor": 2,
+            "address": "Bb5BdxcrCEfEeC8sdSxN1ef6GhQYChSfKPWkB4FLKYJiSWuMXXT4Ewv8BHCRzSJB4ZYvXUcFxN4DPcVu6uwoPNRvQ1NU9Qx"
+          },
+          {
+            "major": 0,
+            "minor": 3,
+            "address": "Bbkw1vpohY3UynhpD6peZZFGDJM2QRskfckUMUgkZJPKXodj1qC8kcFRgc9iDEB68XfDGUvDKBy7h5ikYEbfP2upBJJqxtq"
+          },
+          {
+            "major": 0,
+            "minor": 4,
+            "address": "Bg4vX1yh5VAFXEkxd3MoBqe9gAYM7pMWkh63atyfBZb42gZRjYjnQZ9fh4UTpG1CdRbbUxjAZNQGsPkZWpPxNDLXEWKGw9K"
+          },
+          {
+            "major": 0,
+            "minor": 5,
+            "address": "BfG7cgPojvkXFgtX68a1hsAxBCy3omnwTa31jz6sDPiNZ7m4yfyN5d3YQJkHKu2h4k1GAtGegN8MsCPb3DQmeCEMDUjAs7v"
+          },
+          {
+            "major": 1,
+            "minor": 0,
+            "address": "BYYWR4sNGNV3LUMssBCumk3MfyEsFqLAaGDf6oxddu61EgSFzt8gCwUD4tr3kp9TUfdPs2CnpD7xLZzyC1Ei9UsW3kswCjB"
+          },
+          {
+            "major": 1,
+            "minor": 1,
+            "address": "Bda76Lgw1ENikVBmG1TaP1KumZ3hB3Q5f4wZRjuppNdwYjWzs2RgbLYQgtpdu2YdoTT3EZhiUGaPJQt2FsykeFZbCvtC6XX"
+          },
+          {
+            "major": 1,
+            "minor": 2,
+            "address": "Bd3nyQkV12wD3Frefqnrqif11TjVsTPaTcp37kqqKMrdDRUhpJRczeR7KiBmSHF32UJLP3HHhKUDmEQyJrv2mV8yFACCu4x"
+          }
+        ],
+        "integrated": {
+          "payment_id": "1234567890abcdef",
+          "address": "A3uBWe8y9RQ4886T7196doS9GPMzexD9gXpsZJDwVjeRVdFCSoHnv7KPbBeGpzJBzHRCAs9UxqeoyFQMYbqSWYTfSbyvqonpbf2U2Ww3yx"
+        }
+      },
+      {
+        "seed": "peeled mixture ionic radar utopia puddle buying illness nuns gadget river spout cavernous bounced paradise drunk looking cottage jump tequila melting went winter adjust spout",
+        "spend_key": "609ae8e228a871c37b61292ff898dd144db5d784804cc4a971bf74aff3acb70a",
+        "view_key": "3c2afc906377b0c596136916726e904719350eb9535e286afa703641dd6a7f03",
+        "mnemonic": "peeled mixture ionic radar utopia puddle buying illness nuns gadget river spout cavernous bounced paradise drunk looking cottage jump tequila melting went winter adjust spout",
+        "addresses": [
+          {
+            "major": 0,
+            "minor": 0,
+            "address": "9us9SKXZPfKRDV5aAhLJzQCjDz2ViLRduE3ijDZu3osWKBjMGkV1XPk4pfDUMqt1Aiezvephdqm6YD19GKFD9ZcXVVjAuYj"
+          },
+          {
+            "major": 0,
+            "minor": 1,
+            "address": "Bg4FoW4GrAgFrNEyjkavWuTeMhU1xDE8AUkBwT3vhrmSTw98otBzwC9FxAPC5wH2DGPQmnyC6oiV2WAzWmXWLVpz2gSKrwU"
+          },
+          {
+            "major": 0,
+            "minor": 2,
+            "address": "Bcb8XacxwejXhxvrjQLHm6Kpv81He2JEt9BFBQ6WGWa78JJt5QNogZ9ihG1ce99fQKDiSvMkVARng6PCKGH5rCGwStMMpzg"
+          },
+          {
+            "major": 0,
+            "minor": 3,
+            "address": "BcdyjWpZPeW3UWXbidm4fpfWLBc2ASWyDC39mVcGyTjT6BBro7g3Tj3TwaeFatkztiCvDjhR5ZXzZFcArB8ZuLxSSrBaqnW"
+          },
+          {
+            "major": 0,
+            "minor": 4,
+            "address": "BZYuxFgoKbkgzn4sU89iHt18cFs7VNA8MG243VqZdTSn1xEdhbAE52niKnfwqgG1myXUUd4HdEwPeTiJis3q4FHDAcAExSx"
+          },
+          {
+            "major": 0,
+            "minor": 5,
+            "address": "BYjg85y19UDKBRWxdKm5W8Jc7Kz7WqMsiPcyodsEHqqkDCC9voZpq2yhi6zD9h3tvCZjkCSziSobiPXWskwZQF4VRLsxDK8"
+          },
+          {
+            "major": 1,
+            "minor": 0,
+            "address": "BatXdyK1JUjBmJss9HmUbWbzKz61968qHiQkB8T1fyV48MH8phRQq7cH3xozSgF8cgWLiCDmeoGHv7i9Fc13FDowDKGeECB"
+          },
+          {
+            "major": 1,
+            "minor": 1,
+            "address": "BdnDdZnMP3hVnHTcyWbMmfLRLRnoAgQhYTwwFDpb14GjLyzbBN6RMCAZYoniBfUCSxbdW6bHVUfo2TzuWWSNYVhw3BZ3tab"
+          },
+          {
+            "major": 1,
+            "minor": 2,
+            "address": "BdsutvzREMsWutXjhUBy3fMk7T8FoWtAZN4asU5B57DvYCNWhRVPNANZbdM21TwpebVatbiBPbEQhV5WnQYkLnBuEJDKQCn"
+          }
+        ],
+        "integrated": {
+          "payment_id": "1234567890abcdef",
+          "address": "A5ZpT8M3zvqRDV5aAhLJzQCjDz2ViLRduE3ijDZu3osWKBjMGkV1XPk4pfDUMqt1Aiezvephdqm6YD19GKFD9ZcXjAQXDireo9EU3txrif"
+        }
+      },
+      {
+        "seed": "dilute gutter certain antics pamphlet macro enjoy left slid guarded bogeys upload nineteen bomb jubilee enhanced irritate turnip eggs swung jukebox loudly reduce sedan slid",
+        "spend_key": "930d5eca868a20e194ab914da9bd17cb5fd02e5562f9f474468725a17e2de60d",
+        "view_key": "472e9b7766c3b25297dab1736fd792bf7077a2cc6183e95f81809f899b630705",
+        "mnemonic": "dilute gutter certain antics pamphlet macro enjoy left slid guarded bogeys upload nineteen bomb jubilee enhanced irritate turnip eggs swung jukebox loudly reduce sedan slid",
+        "addresses": [
+          {
+            "major": 0,
+            "minor": 0,
+            "address": "9xPcGo6vD7mBUMhuykdK3gQ98XDqDTYW1hNLaXNvjpsJaSbNtdXh1sKMsdVgqkaihChAzEy29zEDPMR3NHQvGoZCLDwEjc8"
+          },
+          {
+            "major": 0,
+            "minor": 1,
+            "address": "BeJUf4EnGVd8yAYjN6qRnuM6x3GEdJVTdUrfZaEDMCFPEfceg7XVVqEgGoF7jBpkg6J8TLLCcQkQwQff5WGyynLTUXQrtgm"
+          },
+          {
+            "major": 0,
+            "minor": 2,
+            "address": "Bg2CcDfezTsYV9MEmdByy82xnv3j6edAbB5dyPpr3yxc33aqtBhNSdQewxsEcY4PuthumYMrVSjFVDCrp9wGKPBiQbK2Hyx"
+          },
+          {
+            "major": 0,
+            "minor": 3,
+            "address": "BYcgLyeP5uu3ZUQGo9BbuZGpQQxDF4RjBK2sezcsyUW3WjnWf6QtoVMghDhJJ96XjNTycvDrbdcuHL12bjJCCoroGkYEv1b"
+          },
+          {
+            "major": 0,
+            "minor": 4,
+            "address": "BYgznWTUaTPdsn6vj9U92ySJbL5oo9kks2UfqX8YD4HNXibCAaFmALeA3NCqqhw8cxM5KVNMsoBupXNwbpUquw1WUJuaPB9"
+          },
+          {
+            "major": 0,
+            "minor": 5,
+            "address": "BgxVbLu72397BUE34kkwcVfnwWkLtdLanKgSPeFz2UzTUFcbSmp7yXYfZ54WgBRMcF8fMCfizn4UzUfN6CMVCggS9bivqr4"
+          },
+          {
+            "major": 1,
+            "minor": 0,
+            "address": "BdxLX6tKCRAQyjiVXP58QihiGGttQtETJVeLsqDXtXgCJczk7ftWo7k6iKmf4UxGt4ULU3zadRyXf72nPUKyj8cBPKuVvFj"
+          },
+          {
+            "major": 1,
+            "minor": 1,
+            "address": "BezVJrAhe3EXfJxKj1nZsKGK1gBsoALDpeMwnjQWyzqZV6eRb36NEWWMygcdRKGsunQDST1ZuE6VpJs1Hqc5xAvwMawJFDa"
+          },
+          {
+            "major": 1,
+            "minor": 2,
+            "address": "BgKSZS8Pmdm7aWgey9uM1CDKhGEF9FnxVXPFAkiSB8c3N9htFKzCVaAdyLL78barecGQx4GfB7kjsfccZeBXxksfN6T3DAc"
+          }
+        ],
+        "integrated": {
+          "payment_id": "1234567890abcdef",
+          "address": "A86HHbvQpPHBUMhuykdK3gQ98XDqDTYW1hNLaXNvjpsJaSbNtdXh1sKMsdVgqkaihChAzEy29zEDPMR3NHQvGoZCVSuN5XiCwCpU46Hfeb"
+        }
+      }
+    ],
+    "stagenet": [
+      {
+        "seed": "velvet lymph giddy number token physics poetry unquoted nibs useful sabotage limits benches lifestyle eden nitrogen anvil fewest avoid batch vials washing fences goat unquoted",
+        "spend_key": "148d78d2aba7dbca5cd8f6abcfb0b3c009ffbdbea1ff373d50ed94d78286640e",
+        "view_key": "49774391fa5e8d249fc2c5b45dadef13534bf2483dede880dac88f061e809100",
+        "mnemonic": "velvet lymph giddy number token physics poetry unquoted nibs useful sabotage limits benches lifestyle eden nitrogen anvil fewest avoid batch vials washing fences goat unquoted",
+        "addresses": [
+          {
+            "major": 0,
+            "minor": 0,
+            "address": "52s16RaAuPt4886T7196doS9GPMzexD9gXpsZJDwVjeRVdFCSoHnv7KPbBeGpzJBzHRCAs9UxqeoyFQMYbqSWYTfJJ7cV2P"
+          },
+          {
+            "major": 0,
+            "minor": 1,
+            "address": "74CPPhfymmkU3NN1VpFRndSukeyEb3Xpv8qZjjsoJZnTYpDYceuUTpog13D7qPxpviS7J29bSgSkR11hFFoXWk2yNb7yy2v"
+          },
+          {
+            "major": 0,
+            "minor": 2,
+            "address": "7592GAWXn1hEeC8sdSxN1ef6GhQYChSfKPWkB4FLKYJiSWuMXXT4Ewv8BHCRzSJB4ZYvXUcFxN4DPcVu6uwoPNRvPzKUiN6"
+          },
+          {
+            "major": 0,
+            "minor": 3,
+            "address": "75pme8iVHK5UynhpD6peZZFGDJM2QRskfckUMUgkZJPKXodj1qC8kcFRgc9iDEB68XfDGUvDKBy7h5ikYEbfP2upBHWabYd"
+          },
+          {
+            "major": 0,
+            "minor": 4,
+            "address": "7A8m9DsNfGCFXEkxd3MoBqe9gAYM7pMWkh63atyfBZb42gZRjYjnQZ9fh4UTpG1CdRbbUxjAZNQGsPkZWpPxNDLXEVmrpD2"
+          },
+          {
+            "major": 0,
+            "minor": 5,
+            "address": "79KxEtHVKhnXFgtX68a1hsAxBCy3omnwTa31jz6sDPiNZ7m4yfyN5d3YQJkHKu2h4k1GAtGegN8MsCPb3DQmeCEMDVse3ig"
+          },
+          {
+            "major": 1,
+            "minor": 0,
+            "address": "72cM3Gm3r9X3LUMssBCumk3MfyEsFqLAaGDf6oxddu61EgSFzt8gCwUD4tr3kp9TUfdPs2CnpD7xLZzyC1Ei9UsW3kogcXs"
+          },
+          {
+            "major": 1,
+            "minor": 1,
+            "address": "77dwiYacb1QikVBmG1TaP1KumZ3hB3Q5f4wZRjuppNdwYjWzs2RgbLYQgtpdu2YdoTT3EZhiUGaPJQt2FsykeFZbCswfE2p"
+          },
+          {
+            "major": 1,
+            "minor": 2,
+            "address": "777dbceAaoyD3Frefqnrqif11TjVsTPaTcp37kqqKMrdDRUhpJRczeR7KiBmSHF32UJLP3HHhKUDmEQyJrv2mV8yFBXiqYF"
+          }
+        ],
+        "integrated": {
+          "payment_id": "1234567890abcdef",
+          "address": "5CZg7EPfWfQ4886T7196doS9GPMzexD9gXpsZJDwVjeRVdFCSoHnv7KPbBeGpzJBzHRCAs9UxqeoyFQMYbqSWYTfSbyvqonpbf2U4nmkXk"
+        }
+      },
+      {
+        "seed": "peeled mixture ionic radar utopia puddle buying illness nuns gadget river spout cavernous bounced paradise drunk looking cottage jump tequila melting went winter adjust spout",
+        "spend_key": "609ae8e228a871c37b61292ff898dd144db5d784804cc4a971bf74aff3acb70a",
+        "view_key": "3c2afc906377b0c596136916726e904719350eb9535e286afa703641dd6a7f03",
+        "mnemonic": "peeled mixture ionic radar utopia puddle buying illness nuns gadget river spout cavernous bounced paradise drunk looking cottage jump tequila melting went winter adjust spout",
+        "addresses": [
+          {
+            "major": 0,
+            "minor": 0,
+            "address": "54Xe2unFkuKRDV5aAhLJzQCjDz2ViLRduE3ijDZu3osWKBjMGkV1XPk4pfDUMqt1Aiezvephdqm6YD19GKFD9ZcXVU1Uhvi"
+          },
+          {
+            "major": 0,
+            "minor": 1,
+            "address": "7A86RhwxRwiFrNEyjkavWuTeMhU1xDE8AUkBwT3vhrmSTw98otBzwC9FxAPC5wH2DGPQmnyC6oiV2WAzWmXWLVpz2gSSPFb"
+          },
+          {
+            "major": 0,
+            "minor": 2,
+            "address": "76ey9nWeXRmXhxvrjQLHm6Kpv81He2JEt9BFBQ6WGWa78JJt5QNogZ9ihG1ce99fQKDiSvMkVARng6PCKGH5rCGwSrhV7e7"
+          },
+          {
+            "major": 0,
+            "minor": 3,
+            "address": "76hpMiiEyRY3UWXbidm4fpfWLBc2ASWyDC39mVcGyTjT6BBro7g3Tj3TwaeFatkztiCvDjhR5ZXzZFcArB8ZuLxSSsFhunc"
+          },
+          {
+            "major": 0,
+            "minor": 4,
+            "address": "73ckaTaUuNngzn4sU89iHt18cFs7VNA8MG243VqZdTSn1xEdhbAE52niKnfwqgG1myXUUd4HdEwPeTiJis3q4FHDAey8TEU"
+          },
+          {
+            "major": 0,
+            "minor": 5,
+            "address": "72oWkHrgjFFKBRWxdKm5W8Jc7Kz7WqMsiPcyodsEHqqkDCC9voZpq2yhi6zD9h3tvCZjkCSziSobiPXWskwZQF4VRNEg4WT"
+          },
+          {
+            "major": 1,
+            "minor": 0,
+            "address": "74xNGBCgtFmBmJss9HmUbWbzKz61968qHiQkB8T1fyV48MH8phRQq7cH3xozSgF8cgWLiCDmeoGHv7i9Fc13FDowDMQiMY9"
+          },
+          {
+            "major": 1,
+            "minor": 1,
+            "address": "77r4Fmg2xpjVnHTcyWbMmfLRLRnoAgQhYTwwFDpb14GjLyzbBN6RMCAZYoniBfUCSxbdW6bHVUfo2TzuWWSNYVhw3CyTvJ1"
+          },
+          {
+            "major": 1,
+            "minor": 2,
+            "address": "77wkX8t6p8uWutXjhUBy3fMk7T8FoWtAZN4asU5B57DvYCNWhRVPNANZbdM21TwpebVatbiBPbEQhV5WnQYkLnBuEK282Zg"
+          }
+        ],
+        "integrated": {
+          "payment_id": "1234567890abcdef",
+          "address": "5EEK3ibkNAqRDV5aAhLJzQCjDz2ViLRduE3ijDZu3osWKBjMGkV1XPk4pfDUMqt1Aiezvephdqm6YD19GKFD9ZcXjAQXDireo9EU48U7Ee"
+        }
+      },
+      {
+        "seed": "dilute gutter certain antics pamphlet macro enjoy left slid guarded bogeys upload nineteen bomb jubilee enhanced irritate turnip eggs swung jukebox loudly reduce sedan slid",
+        "spend_key": "930d5eca868a20e194ab914da9bd17cb5fd02e5562f9f474468725a17e2de60d",
+        "view_key": "472e9b7766c3b25297dab1736fd792bf7077a2cc6183e95f81809f899b630705",
+        "mnemonic": "dilute gutter certain antics pamphlet macro enjoy left slid guarded bogeys upload nineteen bomb jubilee enhanced irritate turnip eggs swung jukebox loudly reduce sedan slid",
+        "addresses": [
+          {
+            "major": 0,
+            "minor": 0,
+            "address": "5746sPMcaMmBUMhuykdK3gQ98XDqDTYW1hNLaXNvjpsJaSbNtdXh1sKMsdVgqkaihChAzEy29zEDPMR3NHQvGoZCLDtjQYh"
+          },
+          {
+            "major": 0,
+            "minor": 1,
+            "address": "78NKHG8TrGf8yAYjN6qRnuM6x3GEdJVTdUrfZaEDMCFPEfceg7XVVqEgGoF7jBpkg6J8TLLCcQkQwQff5WGyynLTUXAy2SB"
+          },
+          {
+            "major": 0,
+            "minor": 2,
+            "address": "7A63ERZLaEuYV9MEmdByy82xnv3j6edAbB5dyPpr3yxc33aqtBhNSdQewxsEcY4PuthumYMrVSjFVDCrp9wGKPBiQduWq4u"
+          },
+          {
+            "major": 0,
+            "minor": 3,
+            "address": "72gWyBY4fgw3ZUQGo9BbuZGpQQxDF4RjBK2sezcsyUW3WjnWf6QtoVMghDhJJ96XjNTycvDrbdcuHL12bjJCCoroGhYx6yu"
+          },
+          {
+            "major": 0,
+            "minor": 4,
+            "address": "72kqQiMAAERdsn6vj9U92ySJbL5oo9kks2UfqX8YD4HNXibCAaFmALeA3NCqqhw8cxM5KVNMsoBupXNwbpUquw1WUL1tSPE"
+          },
+          {
+            "major": 0,
+            "minor": 5,
+            "address": "7B2LDYnnbpB7BUE34kkwcVfnwWkLtdLanKgSPeFz2UzTUFcbSmp7yXYfZ54WgBRMcF8fMCfizn4UzUfN6CMVCggS9fNberu"
+          },
+          {
+            "major": 1,
+            "minor": 0,
+            "address": "782B9JmznCCQyjiVXP58QihiGGttQtETJVeLsqDXtXgCJczk7ftWo7k6iKmf4UxGt4ULU3zadRyXf72nPUKyj8cBPEqyNJm"
+          },
+          {
+            "major": 1,
+            "minor": 1,
+            "address": "794Kw44PDpGXfJxKj1nZsKGK1gBsoALDpeMwnjQWyzqZV6eRb36NEWWMygcdRKGsunQDST1ZuE6VpJs1Hqc5xAvwMYj2YJV"
+          },
+          {
+            "major": 1,
+            "minor": 2,
+            "address": "7APHBe25MQo7aWgey9uM1CDKhGEF9FnxVXPFAkiSB8c3N9htFKzCVaAdyLL78barecGQx4GfB7kjsfccZeBXxksfMzmfhwP"
+          }
+        ],
+        "integrated": {
+          "payment_id": "1234567890abcdef",
+          "address": "5GkmtCB7BdHBUMhuykdK3gQ98XDqDTYW1hNLaXNvjpsJaSbNtdXh1sKMsdVgqkaihChAzEy29zEDPMR3NHQvGoZCVSuN5XiCwCpTzW8VhE"
+        }
+      }
+    ]
+  },
+  "wallet_rpc_version": 65568
+}
