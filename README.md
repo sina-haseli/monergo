@@ -1,39 +1,109 @@
 # monergo
 
 Pure-Go (`CGO_ENABLED=0`) library for Monero keys, addresses and transaction signing
-(RingCT, CLSAG, Bulletproofs+). Built for stateless signers such as a HashiCorp Vault
-plugin: JSON payload in, signed transaction hex out, no network access.
+(RingCT type 6: CLSAG + Bulletproofs+, view tags), built for stateless signers such as a
+HashiCorp Vault plugin. You give it a JSON request and get a signed transaction back as hex.
+The signer never touches the network.
 
 > **Unaudited. Do not use with real funds until independently audited.**
 
 ## Status
 
-Work in progress. See [docs/PLAN.md](docs/PLAN.md) for the milestones and their status.
+See [docs/PLAN.md](docs/PLAN.md) for milestones and evidence.
+
+- **Primitives, addresses, seeds, serialization and verification:** tested against upstream
+  vectors, `monero-wallet-rpc` output and real mainnet/stagenet transactions.
+- **Provers and builder:** every CLSAG, BP+ and full transaction we produce passes our
+  verifier and [monero-oxide](https://github.com/monero-oxide/monero-oxide) (an independent
+  Rust implementation), with matching hash and weight.
+- **Stagenet end-to-end:** prepared but **not yet run**. It needs a funded stagenet wallet;
+  see [docs/stagenet-e2e.md](docs/stagenet-e2e.md).
+- **Hard forks:** only v16 transactions can be built. FCMP++ (v17) is not supported, and
+  the signer refuses any other hard-fork version.
+
+## Usage
+
+```go
+import "github.com/sina-haseli/monergo/builder"
+
+keys := builder.PrivateKeys{Spend: spendKey, View: viewKey} // keys.SecretKey, hex in JSON
+txHex, txHash, err := builder.Sign(keys, builder.TransferRequest{
+	Network: protocol.Stagenet,
+	Inputs: []builder.Input{{
+		TxPubKey: ..., AdditionalTxPubKeys: ..., OutputIndex: 1, OutputKey: ...,
+		Amount: 5_000_000_000_000, Subaddress: keys.SubaddressIndex{},
+		Ring: ring16, RealIndex: 7, // from get_outs; see package decoy
+	}},
+	Destinations:        []builder.Destination{{Address: "5...", Amount: 1_000_000_000_000}},
+	FeePerByte:          20000, // get_fee_estimate
+	FeeQuantizationMask: 10000,
+	MaxFee:              100_000_000,
+})
+```
+
+Before signing, `builder.Sign` checks the request:
+- **Ownership.** For every input it re-derives the one-time key from the private keys and
+  recomputes the amount commitment. A mismatch is an error.
+- **Rings.** It rejects wrong ring sizes, rings not sorted by global index, and duplicate
+  key images.
+- **Amounts and fee.** It rejects amount overflow, zero amounts, insufficient funds, and a
+  fee above `MaxFee`.
+
+The construction follows `wallet2` / `construct_tx_with_tx_key`: change and dummy 0-amount
+outputs, encrypted (or dummy) payment IDs, additional tx keys for subaddresses, shuffled
+outputs, inputs sorted by key image, and the same `tx_extra` layout. Each signed
+transaction is verified (`package verify`) before it is returned.
+
+Other entry points:
+- `scan.KeyImages(keys, outputs)` returns key images.
+- `address.FromAccount` and `address.Parse` derive and decode addresses.
+- `seed.Decode` and `seed.Encode` handle 25-word seeds.
+- `decoy.Select` picks decoys with wallet2's gamma distribution.
+- `cmd/xmr-sign` is a CLI that reads JSON on stdin and writes JSON on stdout.
+
+## Packages
 
 | Package | Purpose |
 |---|---|
-| `primitives` | Keccak-256, scalar helpers, `Hs`, `Hp`, point decoding |
-| `keys` | key types, key derivation, one-time keys, key images, view tags |
-| `address` | Monero base58, standard / integrated / subaddress |
-| `seed` | 25-word mnemonic |
-| `protocol` | networks, hard-fork rules, consensus constants |
-| `ringct`, `ringct/clsag`, `ringct/bpplus` | commitments, ECDH, CLSAG, Bulletproofs+ |
-| `tx` | transaction types, serialization, hashes, weight |
-| `scan` | output ownership, key images |
-| `builder` | `Sign(keys, request)` |
-| `decoy` | optional decoy selection helper |
-| `cmd/xmr-sign` | CLI for manual testing |
+| `primitives` | Keccak-256, scalar helpers, `Hs`, `Hp`, point decoding, subgroup check |
+| `keys` | key types, key derivation, one-time keys, subaddresses, key images, view tags |
+| `address` (`/base58`) | Monero base58, standard / integrated / subaddress |
+| `seed` | 25-word English mnemonic |
+| `protocol` | networks, hard-fork rules, consensus limits |
+| `ringct`, `ringct/clsag`, `ringct/bpplus` | commitments, ECDH, CLSAG and Bulletproofs+ prove/verify |
+| `tx` | transaction types, byte-exact serialization, hashes, `tx_extra`, weight |
+| `verify` | RingCT verification of a transaction given its rings |
+| `scan` | output ownership, one-time secret keys, key images |
+| `builder` | `Sign(keys, request)`, `InputSigner` (CLSAG today, FCMP++ later) |
+| `decoy` | gamma decoy selection over a daemon's output distribution |
+| `cmd/xmr-sign`, `tools/xmr-prepare` | offline signing CLI; request assembly from wallet-rpc and daemon |
 
 ## Design notes
 
-- Every cryptographic function is a port of the Monero C++ reference. Each one carries a
-  comment naming its upstream file, function and pinned commit, and is tested against
-  upstream vectors.
-- Only two dependencies: `filippo.io/edwards25519` and `golang.org/x/crypto/sha3`. Monero
-  uses the original Keccak, not SHA3-256.
-- Operations on secret scalars use edwards25519's constant-time APIs. Secret buffers are
-  zeroed after use where practical, but Go's garbage collector may copy memory, so run the
-  signer in an isolated process.
+- **Faithful ports.** Every cryptographic function is a port of the Monero C++ reference at
+  commit `3fd0f88`. Each one carries a comment naming the upstream file and function.
+- **Dependencies.** Only `filippo.io/edwards25519` and `golang.org/x/crypto/sha3`
+  (`x/sys` comes in indirectly). Monero uses the original Keccak, not SHA3-256.
+- **Constant time.** Operations on secret scalars use constant-time edwards25519 APIs,
+  including the Bulletproofs+ prover's multi-scalar multiplications (upstream uses
+  variable-time ones there). Secret buffers are zeroed after use where practical, but Go's
+  garbage collector may copy memory. Run the signer in an isolated process.
+- **Benchmarks.** i5-12400, `CGO_ENABLED=0`:
+  - `Sign` 1-in/2-out: 32 ms
+  - `Sign` 4-in/16-out: 223 ms
+  - CLSAG (16) sign: 2.1 ms; verify: 2.0 ms
+  - BP+ (2 outputs) prove: 23 ms; verify: 2.5 ms
+
+## Testing
+
+```sh
+CGO_ENABLED=0 go test ./...
+go test -run '^$' -fuzz FuzzSign -fuzztime 1m ./builder
+(cd tools/oxide-check && cargo build --release) && go test -run Oxide -v ./verify ./builder
+```
+
+Fixtures and their provenance are listed in
+[internal/testvectors/README.md](internal/testvectors/README.md).
 
 ## License
 

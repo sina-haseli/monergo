@@ -11,7 +11,15 @@ Status: **approved 2026-10-31** with every recommendation in §5 accepted.
 | M4 Serialization | done: 9 real txs round-trip byte for byte; tx and prunable hashes match |
 | M5 Verification | done: 30 real CLSAGs and 6 real BP+ verify; every tampered field rejected |
 | M6 Provers | done: own CLSAG/BP+ pass our verifier and monero-oxide (8 tx shapes) |
-| M7–M9 | not started |
+| M7 Builder | done: wallet2-equivalent construction; recipients decode amounts; oxide accepts with matching hash and weight |
+| M8 Stagenet E2E | **blocked**: tooling and `docs/stagenet-e2e.md` ready, daemon side tested live; needs a funded stagenet wallet (Q7) |
+| M9 Hardening | done: fuzz targets for all parsers + signer, golangci-lint clean, CI matrix + oxide job, benchmarks |
+
+Deviations from upstream, all deliberate:
+- The BP+ prover uses constant-time multiexps.
+- The builder refuses inputs from several accounts, as wallet2 does.
+- `decoy.Select` simplifies `wallet2::get_outs`: it does not over-fetch outputs to replace
+  locked ones.
 
 Decisions taken (§5):
 - Q1: BLAKE2b deferred.
